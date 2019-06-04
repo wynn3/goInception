@@ -100,6 +100,11 @@
           
             <li class="toctree-l1">
 		
+    <a class="" href="../statistics/">统计功能</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
     <a class="" href="../tree/">语法树打印</a>
 	    </li>
           
@@ -111,6 +116,8 @@
     <li class="toctree-l2"><a href="#goinception">goInception 更新日志</a></li>
     
         <ul>
+        
+            <li><a class="toctree-l3" href="#v09-beta-2019-6-4">[v0.9-beta] - 2019-6-4</a></li>
         
             <li><a class="toctree-l3" href="#v083-beta-2019-5-30">[v0.8.3-beta] - 2019-5-30</a></li>
         
@@ -202,13 +209,23 @@
             <div class="section">
               
                 <h1 id="goinception">goInception 更新日志</h1>
+<h2 id="v09-beta-2019-6-4">[v0.9-beta] - 2019-6-4</h2>
+<h3 id="new-features">New Features</h3>
+<ul>
+<li>添加统计功能,可通过参数 <code>enable_sql_statistic</code> 启用 (#38)</li>
+<li>添加参数 <code>check_column_position_change</code> ,可控制是否检查列位置/顺序变更 (#40, #41)</li>
+</ul>
+<h3 id="update">Update</h3>
+<ul>
+<li>优化使用阿里云RDS和gh-ost时的逻辑,自动设置 <code>assume-master-host</code> 参数 (#39)</li>
+</ul>
 <h2 id="v083-beta-2019-5-30">[v0.8.3-beta] - 2019-5-30</h2>
 <h3 id="fix">Fix</h3>
 <ul>
 <li>修复gh-ost的initially-drop-old-table和initially-drop-ghost-table参数支持</li>
 <li>修复设置osc_min_table_size大于0后无法正常启用osc的bug</li>
 </ul>
-<h3 id="update">Update</h3>
+<h3 id="update_1">Update</h3>
 <ul>
 <li>兼容语法inception get processlist</li>
 <li>docker镜像内置pt-osc包(版本3.0.13)</li>
@@ -225,11 +242,11 @@
 <ul>
 <li>修复新建表后,使用大小写不一致的表名时返回表不存在bug</li>
 </ul>
-<h3 id="new-features">New Features</h3>
+<h3 id="new-features_1">New Features</h3>
 <ul>
 <li>添加general_log参数,用以记录全量日志</li>
 </ul>
-<h3 id="update_1">Update</h3>
+<h3 id="update_2">Update</h3>
 <ul>
 <li>优化insert select新表的审核规则,现在select新表时也可以审核了</li>
 </ul>
@@ -238,7 +255,7 @@
 <ul>
 <li>修复当开启sql指纹功能时,可能出现把警告误标记为错误的bug</li>
 </ul>
-<h3 id="update_2">Update</h3>
+<h3 id="update_3">Update</h3>
 <ul>
 <li>优化子查询审核规则,递归审核所有子查询</li>
 <li>审核group by语法和聚合函数</li>
@@ -248,17 +265,17 @@
 <ul>
 <li>修复执行阶段kill逻辑,避免kill后备份也中止</li>
 </ul>
-<h3 id="new-features_1">New Features</h3>
+<h3 id="new-features_2">New Features</h3>
 <ul>
 <li>添加select语法支持</li>
 <li>添加alter table的ALGORITHM,LOCK,FORCE语法支持</li>
 </ul>
-<h3 id="update_3">Update</h3>
+<h3 id="update_4">Update</h3>
 <ul>
 <li>优化update子查询审核</li>
 </ul>
 <h2 id="v074-beta-2019-5-12">[v0.7.4-beta] - 2019-5-12</h2>
-<h3 id="new-features_2">New Features</h3>
+<h3 id="new-features_3">New Features</h3>
 <ul>
 <li>添加alter table表选项语法支持 (#30)</li>
 <li>重新设计kill操作支持,支持远端数据库kill和goInception kill命令 (#10)</li>
@@ -268,26 +285,26 @@
 <ul>
 <li>修复在开启备份时,执行错误时偶尔出现的误标记执行/备份成功bug</li>
 </ul>
-<h3 id="new-features_3">New Features</h3>
+<h3 id="new-features_4">New Features</h3>
 <ul>
 <li>添加<code>check_column_type_change</code>参数，设置是否开启字段类型变更审核,默认<code>开启</code> (#27)</li>
 </ul>
-<h3 id="update_4">Update</h3>
+<h3 id="update_5">Update</h3>
 <ul>
 <li>实现insert select * 列数审核</li>
 </ul>
 <h2 id="v072-beta-2019-5-7">[v0.7.2-beta] - 2019-5-7</h2>
-<h3 id="new-features_4">New Features</h3>
+<h3 id="new-features_5">New Features</h3>
 <ul>
 <li>添加<code>enable_json_type</code>参数，设置是否允许json类型字段 (#26)</li>
 </ul>
-<h3 id="update_5">Update</h3>
+<h3 id="update_6">Update</h3>
 <ul>
 <li>实现基于系统变量explicit_defaults_for_timestamp的审核规则</li>
 <li>优化osc解析,转义密码和alter语句中的特殊字符</li>
 </ul>
 <h2 id="v071-beta-2019-5-4">[v0.7.1-beta] - 2019-5-4</h2>
-<h3 id="update_6">Update</h3>
+<h3 id="update_7">Update</h3>
 <ul>
 <li>优化json类型字段处理逻辑，不再检查其默认值和NOT NULL约束 (#7, #22)</li>
 <li>优化must_have_columns参数值解析</li>
@@ -298,13 +315,13 @@
 <li>修复和完善add column(...)语法支持</li>
 <li>修复开启osc时,alter语句有多余空格时执行失败的bug</li>
 </ul>
-<h3 id="new-features_5">New Features</h3>
+<h3 id="new-features_6">New Features</h3>
 <ul>
 <li>添加<code>enable_null_index_name</code>参数，允许不指定索引名 (#25)</li>
 <li>添加语法树打印功能(beta) (#21)</li>
 </ul>
 <h2 id="v07-beta-2019-4-26">[v0.7-beta] - 2019-4-26</h2>
-<h3 id="update_7">Update</h3>
+<h3 id="update_8">Update</h3>
 <ul>
 <li>优化update关联新建表时的审核，现在update时可以关联新建表了</li>
 <li>优化insert 新建 select语法审核，现在可以获取预估受影响行数了</li>
@@ -316,7 +333,7 @@
 <ul>
 <li>修复开启<code>enable_pk_columns_only_int</code>选项时列类型审核错误的问题</li>
 </ul>
-<h3 id="new-features_6">New Features</h3>
+<h3 id="new-features_7">New Features</h3>
 <ul>
 <li>添加<code>enable_set_collation</code>参数，设置是否允许指定表和数据库的排序规则</li>
 <li>添加<code>support_collation</code>参数，设置支持的排序规则,多个时以逗号分隔</li>
@@ -327,13 +344,13 @@
 <li>修复mysql 5.6和mariadb无法获取受影响行数的问题</li>
 </ul>
 <h2 id="v063-beta-2019-4-22">[v0.6.3-beta] - 2019-4-22</h2>
-<h3 id="new-features_7">New Features</h3>
+<h3 id="new-features_8">New Features</h3>
 <ul>
 <li>添加<code>max_insert_rows</code>参数，设置insert values允许的最大行数。</li>
 <li>添加<code>must_have_columns</code>参数，用以指定建表时必须创建的列。多个列时以逗号分隔(<code>格式: 列名 [列类型,可选]</code>)</li>
 </ul>
 <h2 id="v062-beta-2019-4-18">[v0.6.2-beta] - 2019-4-18</h2>
-<h3 id="update_8">Update</h3>
+<h3 id="update_9">Update</h3>
 <ul>
 <li>添加不支持的语法警告(create table as和create table select)</li>
 <li>实现alter多子句时的表结构变化支持,如drop column后跟add column</li>
@@ -344,7 +361,7 @@
 <li>修复索引的唯一标识设置错误问题</li>
 </ul>
 <h2 id="v061-beta-2019-4-9">[v0.6.1-beta] - 2019-4-9</h2>
-<h3 id="update_9">Update</h3>
+<h3 id="update_10">Update</h3>
 <ul>
 <li>添加远端数据库断开重连机制，优化线程号和master status查询速度</li>
 <li>优化远端数据库访问操作</li>
@@ -355,7 +372,7 @@
 <li>修复跨库update时无法找到列的问题</li>
 <li>修复osc子句有双引号时执行错误的问题</li>
 </ul>
-<h3 id="new-features_8">New Features</h3>
+<h3 id="new-features_9">New Features</h3>
 <ul>
 <li>添加sql指纹功能
 dml语句相似时，可以根据相同的指纹ID复用explain结果，以减少远端数据库explain操作，并提高审核速度<ul>
@@ -366,7 +383,7 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 </li>
 </ul>
 <h2 id="v06-beta-2019-4-3">[v0.6-beta] - 2019-4-3</h2>
-<h3 id="update_10">Update</h3>
+<h3 id="update_11">Update</h3>
 <ul>
 <li>备份操作性能优化,备份信息改为批量写入</li>
 <li>添加备份库连接超时检查</li>
@@ -381,13 +398,13 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 <li>修复index name校验逻辑,其可与列名一致</li>
 <li>修复timestamp默认值校验不准确的问题</li>
 </ul>
-<h3 id="new-features_9">New Features</h3>
+<h3 id="new-features_10">New Features</h3>
 <ul>
 <li>添加kill功能支持,在审核和执行时可以kill,备份阶段无法kill (#10)</li>
 <li>添加<code>check_timestamp_count</code>参数,可配置是否检查current_timestamp数量 (#11, #15)</li>
 </ul>
 <h2 id="v053-beta-2019-3-25">[v0.5.3-beta] - 2019-3-25</h2>
-<h3 id="update_11">Update</h3>
+<h3 id="update_12">Update</h3>
 <ul>
 <li>变更列名时使用逻辑校验,避免explain update失败</li>
 <li>添加union子句校验</li>
@@ -400,14 +417,14 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 <li>修复default value为表达式时的校验问题</li>
 </ul>
 <h2 id="v052-beta-2019-3-17">[v0.5.2-beta] - 2019-3-17</h2>
-<h3 id="update_12">Update</h3>
+<h3 id="update_13">Update</h3>
 <ul>
 <li>优化主键NULL列审核规则(审核<code>DEFAULT NULL</code>)</li>
 <li>优化索引总长度校验,根据列字符集判断字节数长度</li>
 <li>优化DDL备份对默认值的处理</li>
 </ul>
 <h2 id="v051-beta-2019-3-14">[v0.5.1-beta] - 2019-3-14</h2>
-<h3 id="update_13">Update</h3>
+<h3 id="update_14">Update</h3>
 <ul>
 <li>优化option解析规则,密码兼容特殊字符</li>
 <li>优化语法解析失败时返回的sql语句</li>
@@ -422,7 +439,7 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 <li>修复mariadb备份警告信息重复的问题</li>
 </ul>
 <h2 id="v05-beta-2019-3-10">[v0.5-beta] - 2019-3-10</h2>
-<h3 id="update_14">Update</h3>
+<h3 id="update_15">Update</h3>
 <ul>
 <li>兼容mariadb v10版本的备份兼容(高并发时回滚语句可能有误，须注意检查)</li>
 <li>更新pt-osc部分参数名，使其与inception保持一致<ul>
@@ -447,7 +464,7 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 <li>修复json列校验异常问题 (#7)</li>
 </ul>
 <h2 id="v041-beta-2019-3-6">[v0.4.1-beta] - 2019-3-6</h2>
-<h3 id="update_15">Update</h3>
+<h3 id="update_16">Update</h3>
 <ul>
 <li>兼容mariadb数据库(v5.5.60)<ul>
 <li>添加mariadb的binlog解析支持(测试版本<strong>v5.5.60</strong>,v10版本由于binlog格式改变,暂无法解析thread_id)</li>
@@ -456,7 +473,7 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 </li>
 </ul>
 <h2 id="v04-beta-2019-3-5">[v0.4-beta] - 2019-3-5</h2>
-<h3 id="new-features_10">New Features</h3>
+<h3 id="new-features_11">New Features</h3>
 <ul>
 <li>添加gh-ost工具支持<ul>
 <li>无需安装gh-ost,功能内置(v1.0.48)</li>
@@ -470,7 +487,7 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 </li>
 </ul>
 <h2 id="v03-beta-2019-2-13">[v0.3-beta] - 2019-2-13</h2>
-<h3 id="new-features_11">New Features</h3>
+<h3 id="new-features_12">New Features</h3>
 <ul>
 <li>添加pt-osc工具支持<ul>
 <li><code>inception get osc processlist</code> 查看osc进程列表</li>

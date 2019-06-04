@@ -8,7 +8,7 @@
   
   <meta name="author" content="hanchuanchuan">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>备份功能 - goInception使用文档</title>
+  <title>统计功能 - goInception使用文档</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "\u5907\u4efd\u529f\u80fd";
-    var mkdocs_page_input_path = "backup.md";
-    var mkdocs_page_url = "/hanchuanchuan/goInception/backup/";
+    var mkdocs_page_name = "\u7edf\u8ba1\u529f\u80fd";
+    var mkdocs_page_input_path = "statistics.md";
+    var mkdocs_page_url = "/hanchuanchuan/goInception/statistics/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -78,21 +78,9 @@
     <a class="" href="../rules/">审核规则</a>
 	    </li>
           
-            <li class="toctree-l1 current">
+            <li class="toctree-l1">
 		
-    <a class="current" href="./">备份功能</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#_1">备份功能说明</a></li>
-    
-
-    <li class="toctree-l2"><a href="#_2">备份功能写入规则</a></li>
-    
-
-    <li class="toctree-l2"><a href="#_3">备份功能详细步骤</a></li>
-    
-
-    </ul>
+    <a class="" href="../backup/">备份功能</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -110,9 +98,18 @@
     <a class="" href="../kill_stmt/">KILL操作</a>
 	    </li>
           
-            <li class="toctree-l1">
+            <li class="toctree-l1 current">
 		
-    <a class="" href="../statistics/">统计功能</a>
+    <a class="current" href="./">统计功能</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#_1">统计功能</a></li>
+    
+
+    <li class="toctree-l2"><a href="#_2">说明</a></li>
+    
+
+    </ul>
 	    </li>
           
             <li class="toctree-l1">
@@ -147,10 +144,10 @@
     
       
     
-    <li>备份功能</li>
+    <li>统计功能</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/hanchuanchuan/goInception/edit/master/docs/backup.md"
+        <a href="https://github.com/hanchuanchuan/goInception/edit/master/docs/statistics.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -160,171 +157,38 @@
           <div role="main">
             <div class="section">
               
-                <h4 id="_1">备份功能说明</h4>
-<p>goInception自带备份功能，首先服务启动时配置config.toml</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>默认值</th>
-<th>可选范围</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>backup_host</td>
-<td>""</td>
-<td>string</td>
-<td>备份数据库IP地址</td>
-</tr>
-<tr>
-<td>backup_port</td>
-<td>0</td>
-<td>int</td>
-<td>备份数据库端口</td>
-</tr>
-<tr>
-<td>backup_user</td>
-<td>""</td>
-<td>string</td>
-<td>备份数据库用户名</td>
-</tr>
-<tr>
-<td>backup_password</td>
-<td>""</td>
-<td>string</td>
-<td>备份数据库密码</td>
-</tr>
-</tbody>
-</table>
-<p>并且在执行sql时，添加<code>--backup=true</code>选项</p>
-<pre><code class="sql">/*--user=root;--password=root;--host=127.0.0.1;--port=3306;--execute=1;--backup=1;*/
-inception_magic_start;
-use test;
-create table t1(id int primary key);
-inception_magic_commit;
+                <h1 id="_1">统计功能</h1>
+<p>统计功能用以记录操作占比，通过参数 <code>enable_sql_statistic</code> 开启。</p>
+<p>除了上面的参数之外，使用这个功能还需要开启操作备份功能，因为这些统计数据需要存储到备份数据库中，存储的数据库名为inception中，
+这个数据库现在只有一个表statistic，存储的就是SQL执行数目的统计数据。</p>
+<p><strong>statistic</strong>表的结构如下：
+<img alt="" src="../images/statistic.png" /></p>
+<p>从每一个列的名字就可以看到，其值对应的操作是什么，每一个列就是一个自增列，第二个列optime是操作时间，这个主要是用来统计在某一段时间内的某一个操作占多少比例。</p>
+<p>部分列说明：</p>
+<ul>
+<li><strong>deleting</strong> : 包括普通的删除操作及多表删除操作。</li>
+<li><strong>inserting</strong> : 包括单行插入、多行插入及查询插入。</li>
+<li><strong>updating</strong> : 包括普通单表更新及多表的更新。</li>
+<li><strong>renaming</strong> : 指的是ALTER table语句中的rename操作。</li>
+<li><strong>createindex</strong> : 指的是ALTER table语句中的add index操作。</li>
+<li><strong>dropindex</strong> : 指的是ALTER table语句中的drop index操作。</li>
+<li><strong>alteroption</strong> : 指的是ALTER table语句中的修改表属性的操作，比如存储引擎、自增值及字符集中操作。</li>
+<li><strong>alterconvert</strong> : 指的是ALTER table语句中修改表字符集的操作。</li>
+</ul>
+<p>对于ALTER TABLE操作，因为这个操作包含很多的子操作，比如rename、drop index、engine innodb等操作，所以对于列altertable，它的值是renaming, createindex, dropindex, addcolumn, dropcolumn, changecolumn, alteroption, alterconvert的和, 而后面的是对ALTER TABLE语句的细分操作统计。</p>
+<p>那么如果现在想要统计某一个操作，比如修改表占所有操作的百分比，则使用如下语句即可完成：</p>
+<pre><code>select sum(a.oprate)/count(1) updaterate from
+(select (updating)/(usedb+deleting+inserting+updating+selecting+altertable+
+createtable+droptable+createdb+truncating) oprate from
+inception.statistic) a;
 </code></pre>
 
-<h4 id="_2">备份功能写入规则</h4>
+<h1 id="_2">说明</h1>
 <ul>
-<li>在备份服务器上，备份库的命名格式为：<code>IP_PORT_库名</code>，例如<code>127_0_0_1_3306_test</code></li>
-<li>
-<p>在备份库上创建备份信息表<code>$_$Inception_backup_information$_$</code>，用来保存该库的执行信息和回滚语句信息</p>
-<table>
-<thead>
-<tr>
-<th>字段名</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>opid_time</td>
-<td>varchar(50)</td>
-<td>执行操作ID,格式为<code>时间戳_线程号_执行序号</code></td>
-</tr>
-<tr>
-<td>start_binlog_file</td>
-<td>varchar(512)</td>
-<td>起始binlog文件</td>
-</tr>
-<tr>
-<td>start_binlog_pos</td>
-<td>int(11)</td>
-<td>起始binlog位置</td>
-</tr>
-<tr>
-<td>end_binlog_file</td>
-<td>varchar(512)</td>
-<td>终止binlog文件</td>
-</tr>
-<tr>
-<td>end_binlog_pos</td>
-<td>int(11)</td>
-<td>终止binlog位置</td>
-</tr>
-<tr>
-<td>sql_statement</td>
-<td>text</td>
-<td>执行SQL</td>
-</tr>
-<tr>
-<td>host</td>
-<td>varchar(64)</td>
-<td>执行IP地址</td>
-</tr>
-<tr>
-<td>dbname</td>
-<td>varchar(64)</td>
-<td>执行库名</td>
-</tr>
-<tr>
-<td>tablename</td>
-<td>varchar(64)</td>
-<td>执行表名</td>
-</tr>
-<tr>
-<td>port</td>
-<td>int(11)</td>
-<td>执行端口</td>
-</tr>
-<tr>
-<td>time</td>
-<td>timestamp</td>
-<td>执行时间</td>
-</tr>
-<tr>
-<td>type</td>
-<td>varchar(20)</td>
-<td>操作类型</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p>在备份库有和操作表相同的表名，其表结构统一为：</p>
-<table>
-<thead>
-<tr>
-<th>字段名</th>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>id</td>
-<td>bigint</td>
-<td>自增主键</td>
-</tr>
-<tr>
-<td>rollback_statement</td>
-<td>mediumtext</td>
-<td>回滚语句</td>
-</tr>
-<tr>
-<td>opid_time</td>
-<td>varchar(50)</td>
-<td>关联执行操作ID</td>
-</tr>
-</tbody>
-</table>
-</li>
+<li>只是审核操作，或者审核失败未执行时，不会进行操作统计。</li>
+<li>goInception会记录实际执行的数据，即如果执行一部分后失败时，只记录实际执行的操作。</li>
+<li>备份出错导致提前返回时，不会影响统计信息。</li>
 </ul>
-<h4 id="_3">备份功能详细步骤</h4>
-<ol>
-<li>配置备份数据库，并在执行SQl时开启备份功能</li>
-<li>在执行SQL前记录binlog位置和线程号(逐条执行逐条记录)</li>
-<li>执行SQL</li>
-<li>在执行SQL后记录binlog位置和线程号</li>
-<li>开始备份，解析远程服务器binlog</li>
-<li>在备份服务器创建备份库</li>
-<li>创建备份信息表，写入执行信息和binlog位置信息</li>
-<li>创建备份表，</li>
-<li>逐步解析binlog，并生成回滚语句，写入备份表</li>
-</ol>
               
             </div>
           </div>
@@ -332,10 +196,10 @@ inception_magic_commit;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../osc/" class="btn btn-neutral float-right" title="DDL变更:pt-osc">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../tree/" class="btn btn-neutral float-right" title="语法树打印">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../rules/" class="btn btn-neutral" title="审核规则"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../kill_stmt/" class="btn btn-neutral" title="KILL操作"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -363,10 +227,10 @@ inception_magic_commit;
           <a href="https://github.com/hanchuanchuan/goInception/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../rules/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../kill_stmt/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../osc/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../tree/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
