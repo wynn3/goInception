@@ -8,7 +8,7 @@
   
   <meta name="author" content="hanchuanchuan">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>调用选项 - goInception使用文档</title>
+  <title>自定义审核级别 - goInception使用文档</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "\u8c03\u7528\u9009\u9879";
-    var mkdocs_page_input_path = "params.md";
-    var mkdocs_page_url = "/hanchuanchuan/goInception/params/";
+    var mkdocs_page_name = "\u81ea\u5b9a\u4e49\u5ba1\u6838\u7ea7\u522b";
+    var mkdocs_page_input_path = "levels.md";
+    var mkdocs_page_url = "/hanchuanchuan/goInception/levels/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -58,18 +58,9 @@
     <a class="" href="../install/">安装</a>
 	    </li>
           
-            <li class="toctree-l1 current">
+            <li class="toctree-l1">
 		
-    <a class="current" href="./">调用选项</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#_1">使用示例</a></li>
-    
-
-    <li class="toctree-l2"><a href="#_2">选项列表</a></li>
-    
-
-    </ul>
+    <a class="" href="../params/">调用选项</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -112,9 +103,28 @@
     <a class="" href="../kill_stmt/">KILL操作</a>
 	    </li>
           
-            <li class="toctree-l1">
+            <li class="toctree-l1 current">
 		
-    <a class="" href="../levels/">自定义审核级别</a>
+    <a class="current" href="./">自定义审核级别</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#_1">功能说明</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#_2">查看命令</a></li>
+        
+            <li><a class="toctree-l3" href="#_3">设置审核级别命令</a></li>
+        
+            <li><a class="toctree-l3" href="#_4">配置文件</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l2"><a href="#deletewhere">示例：实现限制 delete语句必须有where条件</a></li>
+    
+
+    </ul>
 	    </li>
           
             <li class="toctree-l1">
@@ -154,10 +164,10 @@
     
       
     
-    <li>调用选项</li>
+    <li>自定义审核级别</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/hanchuanchuan/goInception/edit/master/docs/params.md"
+        <a href="https://github.com/hanchuanchuan/goInception/edit/master/docs/levels.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -167,106 +177,58 @@
           <div role="main">
             <div class="section">
               
-                <h4 id="_1">使用示例</h4>
-<p>goInception延用inception的使用方式，在审核的sql开始前添加注释来指定远端服务器，并在sql的前后添加特殊标识以区分待审核语句，示例如下：</p>
-<pre><code class="sql">/*--user=root;--password=root;--host=127.0.0.1;--check=1;--port=3306;*/
-inception_magic_start;
-use test;
-create table t1(id int primary key);
-inception_magic_commit;
+                <h3 id="_1">功能说明</h3>
+<p>自定义审核级别用以实现指定审核结果的错误级别。</p>
+<p>对应审核结果的 <code>error_level</code> 字段：</p>
+<ul>
+<li><code>2</code> 为错误，即强限制，无法执行</li>
+<li><code>1</code> 为警告，即弱限制，可通过忽略警告参数<code>ignore_warnings</code>跳过</li>
+<li><code>0</code> 为正常，即不做限制</li>
+</ul>
+<h5 id="_2">查看命令</h5>
+<pre><code class="sql">inception show levels;
 </code></pre>
 
-<h3 id="_2">选项列表</h3>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>默认值</th>
-<th>数据类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>host</td>
-<td>''</td>
-<td>string</td>
-<td>线上数据库IP地址</td>
-</tr>
-<tr>
-<td>port</td>
-<td>0</td>
-<td>int</td>
-<td>线上数据库端口</td>
-</tr>
-<tr>
-<td>user</td>
-<td>''</td>
-<td>string</td>
-<td>线上数据库用户名</td>
-</tr>
-<tr>
-<td>password</td>
-<td>''</td>
-<td>string</td>
-<td>线上数据库密码</td>
-</tr>
-<tr>
-<td>check</td>
-<td>false</td>
-<td>bool</td>
-<td>开启审核功能</td>
-</tr>
-<tr>
-<td>execute</td>
-<td>false</td>
-<td>bool</td>
-<td>开启执行功能</td>
-</tr>
-<tr>
-<td>backup</td>
-<td>false</td>
-<td>bool</td>
-<td>开启备份功能，仅在执行时生效</td>
-</tr>
-<tr>
-<td>ignore_warnings</td>
-<td>false</td>
-<td>bool</td>
-<td>是否忽略警告，仅在执行时生效。该参数控制有警告时是继续执行还是中止</td>
-</tr>
-<tr>
-<td>fingerprint <code>v0.6.2</code></td>
-<td>false</td>
-<td>bool</td>
-<td>开启sql指纹功能。dml语句相似时，可以根据相同的指纹ID复用explain结果，以减少远端数据库explain操作，并提高审核速度</td>
-</tr>
-<tr>
-<td>query-print <code>v0.7.1</code></td>
-<td>false</td>
-<td>bool</td>
-<td>打印SQL语法树，返回JSON格式结果，详情请查看<strong><a href="../tree">语法树打印</a></strong></td>
-</tr>
-<tr>
-<td>split <code>v0.9.1</code></td>
-<td>false</td>
-<td>bool</td>
-<td>将一段SQL语句按互不影响原则分组DDL和DML语句，即相同表的DDL及DML语句分开两个语句块执行。指定后，其他选项(审核、执行、备份、打印语法树等)均不再生效。兼容老版inception，实际情况下 <strong>可以不分组</strong>，goInception记录有表结构快照，用以实现binlog解析。<a href="https://github.com/hanchuanchuan/goInception/pull/42">更多信息</a></td>
-</tr>
-<tr>
-<td>sleep <code>v1.0-rc3</code></td>
-<td>0</td>
-<td>int</td>
-<td>执行 <code>sleep_rows</code> 条SQL后休眠多少毫秒，用以降低对线上数据库的影响。单位为毫秒，最小值为 <code>0</code> ，即不设置，最大值为 <code>100000</code>，即100秒。默认值 <code>0</code></td>
-</tr>
-<tr>
-<td>sleep_rows <code>v1.0-rc3</code></td>
-<td>1</td>
-<td>int</td>
-<td>执行多少条SQL后休眠一次。最小值为 <code>1</code>，默认值 <code>1</code></td>
-</tr>
-</tbody>
-</table>
+<p>筛选查看</p>
+<pre><code class="sql"># 筛选指定审核名称
+inception show levels like '%blob%';
+# 筛选指定级别
+inception show levels where value=2;
+# 筛选指定关键字
+inception show levels where `desc` like '%index%';
+</code></pre>
+
+<p><img alt="支持参数" src="../images/levels_all.png" /></p>
+<h5 id="_3">设置审核级别命令</h5>
+<pre><code class="sql">inception set level er_no_where_condition = 2;
+</code></pre>
+
+<h5 id="_4">配置文件</h5>
+<p><strong> config.toml配置文件 </strong></p>
+<p><em>参数的可选值均为 <code>0</code>,<code>1</code>,<code>2</code></em></p>
+<pre><code>[inc_level]
+er_alter_table_once = 1
+er_auto_incr_id_warning = 1
+er_autoinc_unsigned = 1
+...
+</code></pre>
+
+<h3 id="deletewhere">示例：实现限制 <code>delete语句必须有where条件</code></h3>
+<p>1.开启where条件审核选项</p>
+<pre><code class="sql">inception show variables like '%where%';
+
+inception set check_dml_where = 1;
+</code></pre>
+
+<p><img alt="开启where条件审核选项" src="../images/levels_0.png" /></p>
+<p>2.设置where条件的审核级别为错误 (<code>2</code>)</p>
+<pre><code class="sql">inception show levels like '%where%';
+
+inception set level er_no_where_condition = 2;
+</code></pre>
+
+<p><img alt="设置where条件的审核级别" src="../images/levels_1.png" /></p>
+<p>3.验证审核结果</p>
               
             </div>
           </div>
@@ -274,10 +236,10 @@ inception_magic_commit;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../demo/" class="btn btn-neutral float-right" title="使用示例">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../statistics/" class="btn btn-neutral float-right" title="统计功能">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../install/" class="btn btn-neutral" title="安装"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../kill_stmt/" class="btn btn-neutral" title="KILL操作"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -305,10 +267,10 @@ inception_magic_commit;
           <a href="https://github.com/hanchuanchuan/goInception/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../install/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../kill_stmt/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../demo/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../statistics/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
