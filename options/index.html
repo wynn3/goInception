@@ -251,10 +251,22 @@
 <td>在DML语句中没有WHERE条件时，是不是要报错</td>
 </tr>
 <tr>
+<td>check_float_double <code>v1.0.2</code></td>
+<td>false</td>
+<td>true,false</td>
+<td>开启时,当使用 <code>float/double</code> 类型时提示转成 <code>decimal</code> 类型</td>
+</tr>
+<tr>
 <td>check_identifier</td>
 <td>false</td>
 <td>true,false</td>
 <td>检查标识符是否正确,规则是[a-z,A-Z,0-9,_]</td>
+</tr>
+<tr>
+<td>check_identifier_upper  <code>v1.0.2</code></td>
+<td>false</td>
+<td>true,false</td>
+<td>要求标识符即表名、列名、索引名等必须为大写,默认为<code>false</code></td>
 </tr>
 <tr>
 <td>check_index_prefix</td>
@@ -303,6 +315,12 @@
 <td>false</td>
 <td>true,false</td>
 <td>检查是不是支持BLOB字段，包括建表、修改列、新增列操作</td>
+</tr>
+<tr>
+<td>enable_change_column <code>v1.0.3</code></td>
+<td>true</td>
+<td>true,false</td>
+<td>设置是否支持change column语法,默认值<code>true</code></td>
 </tr>
 <tr>
 <td>enable_column_charset</td>
@@ -356,7 +374,7 @@
 <td>enable_not_innodb  <code>v1.0-rc4 已删除</code></td>
 <td>false</td>
 <td>true,false</td>
-<td><code>已删除</code> 请使用 <code>enable_set_engine</code>和 <code>support_engine</code>以便于更灵活的指定存储引擎。 <em>建表指定的存储引擎不为Innodb，不报错</em></td>
+<td><code>已删除!</code> 请使用 <code>enable_set_engine</code>和 <code>support_engine</code>以便于更灵活的指定存储引擎。 <em>建表指定的存储引擎不为Innodb，不报错</em></td>
 </tr>
 <tr>
 <td>enable_nullable</td>
@@ -453,6 +471,12 @@
 <td>0</td>
 <td>int</td>
 <td>最大char长度,当超出时警告转换为varchar类型</td>
+</tr>
+<tr>
+<td>max_ddl_affect_rows <code>v1.0.2</code></td>
+<td>0</td>
+<td>int</td>
+<td>当DDL预估受影响行数超出设置值时警告,为0时不限制</td>
 </tr>
 <tr>
 <td>max_insert_rows   <code>v0.6.3</code></td>
