@@ -127,6 +127,8 @@
     
         <ul>
         
+            <li><a class="toctree-l3" href="#v110-2019-9-7">[v1.1.0] - 2019-9-7</a></li>
+        
             <li><a class="toctree-l3" href="#v105-2019-8-20">[v1.0.5] - 2019-8-20</a></li>
         
             <li><a class="toctree-l3" href="#v104-2019-8-5">[v1.0.4] - 2019-8-5</a></li>
@@ -239,26 +241,46 @@
             <div class="section">
               
                 <h1 id="goinception">goInception 更新日志</h1>
-<h2 id="v105-2019-8-20">[v1.0.5] - 2019-8-20</h2>
+<h2 id="v110-2019-9-7">[v1.1.0] - 2019-9-7</h2>
 <h3 id="fix">Fix</h3>
+<ul>
+<li>修复add column操作未命中<code>merge_alter_table</code>检测的问题 (#79)</li>
+</ul>
+<h3 id="new-features">New Features</h3>
+<ul>
+<li>添加空间类型语法解析,添加空间索引支持</li>
+<li>添加新的调用选项<code>--db</code>,用以设置默认连接的数据库,默认值为<code>mysql</code></li>
+</ul>
+<h3 id="update">Update</h3>
+<ul>
+<li>支持建库时同时创建表等操作 (#77)</li>
+<li>优化DDL回滚细节,对alter table多条子句调整回滚SQL为逆向 (#76)</li>
+<li>在执行前添加数据库只读状态判断</li>
+<li>优化索引总长度审核,现在基于目标库<code>innodb_large_prefix</code>参数判断</li>
+<li>审核select语法中的星号列</li>
+<li>优化多语句拆分解析逻辑,优化分号末尾但未结束的SQL解析</li>
+<li>完善列定义中的索引校验</li>
+</ul>
+<h2 id="v105-2019-8-20">[v1.0.5] - 2019-8-20</h2>
+<h3 id="fix_1">Fix</h3>
 <ul>
 <li>修复insert values子句不支持default语法的问题</li>
 </ul>
-<h3 id="new-features">New Features</h3>
+<h3 id="new-features_1">New Features</h3>
 <ul>
 <li>添加参数<code>default_charset</code> 用以设置连接数据库的默认字符集,默认值<code>utf8mb4</code> (解决低版本不支持utf8mb4的问题)</li>
 <li>添加pt-osc参数<code>osc_check_unique_key_change</code>, 设置pt-osc是否检查唯一索引,默认为<code>true</code></li>
 </ul>
-<h3 id="update">Update</h3>
+<h3 id="update_1">Update</h3>
 <ul>
 <li>优化回滚功能,添加binlog_row_image设置检查,为minimal时自动修改会话级别为full</li>
 </ul>
 <h2 id="v104-2019-8-5">[v1.0.4] - 2019-8-5</h2>
-<h3 id="new-features_1">New Features</h3>
+<h3 id="new-features_2">New Features</h3>
 <ul>
 <li>添加set names语法支持 (#69)</li>
 </ul>
-<h3 id="update_1">Update</h3>
+<h3 id="update_2">Update</h3>
 <ul>
 <li>优化主键索引审核信息 (#67)</li>
 <li>完善<code>update set</code>多字段审核规则,为set多列and语法添加警告</li>
@@ -266,90 +288,90 @@
 <li>完善外键审核规则 (#68,#70)</li>
 </ul>
 <h2 id="v103-2019-7-29">[v1.0.3] - 2019-7-29</h2>
-<h3 id="fix_1">Fix</h3>
+<h3 id="fix_2">Fix</h3>
 <ul>
 <li><code>[gh-ost]</code> 修复gh-ost在异常时没有断开binlog dump连接的问题</li>
 <li><code>[gh-ost]</code> 修复gh-ost当添加datetime列且默认值current_timestamp时,增量数据因时区导致数据错误的问题(timestamp列是正常的)</li>
 </ul>
-<h3 id="new-features_2">New Features</h3>
+<h3 id="new-features_3">New Features</h3>
 <ul>
 <li>添加参数 <code>enable_change_column</code> ,设置是否支持change column语法</li>
 <li>添加调用选项 <code>real_row_count</code>,设置是否通过<code>count(*)</code>获取真正受影响行数.默认值<code>false</code></li>
 </ul>
-<h3 id="update_2">Update</h3>
+<h3 id="update_3">Update</h3>
 <ul>
 <li>添加pt-osc执行change column的审核,禁止多条change column操作,以免数据丢失 (pt-osc bug)</li>
 </ul>
 <h2 id="v102-2019-7-26">[v1.0.2] - 2019-7-26</h2>
-<h3 id="fix_2">Fix</h3>
+<h3 id="fix_3">Fix</h3>
 <ul>
 <li>修复 <code>alter table</code> 命令没有其他选项时能正常通过的bug (#59)</li>
 <li>修复跨库操作时可能出现备份记录写错备份库的问题</li>
 </ul>
-<h3 id="new-features_3">New Features</h3>
+<h3 id="new-features_4">New Features</h3>
 <ul>
 <li>添加参数 <code>max_ddl_affect_rows</code>，设置DDL允许的最大受影响行数，默认为<code>0</code>，即不限制</li>
 <li>添加参数 <code>check_float_double</code> ，为 true 时，警告将 float/double 转成 decimal 数据类型。 默认为 false (#62)</li>
 <li>添加参数 <code>check_identifier_upper</code> ，限制表名、列名、索引名等必须为大写，默认为<code>false</code> (#63)</li>
 </ul>
-<h3 id="update_3">Update</h3>
+<h3 id="update_4">Update</h3>
 <ul>
 <li>优化自定义审核级别实现，移除参数 <code>enable_level</code>，现在自定义审核级别和审核开关设置合并 (#52)</li>
 <li>升级parser语法解析包，优化列排序规则和分区表语法支持 (#50)</li>
 <li>优化gh-ost的server_id设置自动变化，避免同一实例重复</li>
 </ul>
 <h2 id="v101-2019-7-20">[v1.0.1] - 2019-7-20</h2>
-<h3 id="fix_3">Fix</h3>
+<h3 id="fix_4">Fix</h3>
 <ul>
 <li>修复 <code>must_have_columns</code> 参数列类型的大小写兼容问题</li>
 </ul>
-<h3 id="new-features_4">New Features</h3>
+<h3 id="new-features_5">New Features</h3>
 <ul>
 <li>添加 <code>alter table rename index</code> 语法支持</li>
 <li>添加参数 <code>enable_zero_date</code>，设置是否支持时间为0值，关闭时强制报错。默认值为 <code>true</code> (#55)</li>
 <li>添加参数 <code>enable_timestamp_type</code> ，设置是否允许 <code>timestamp</code> 类型字段 (#57)</li>
 <li>添加 <code>mysql 5.5</code> 版本审核支持 (#54)</li>
 </ul>
-<h3 id="update_4">Update</h3>
+<h3 id="update_5">Update</h3>
 <ul>
 <li>优化modify column列信息逻辑保存</li>
 <li>优化列属性的键定义逻辑保存</li>
 </ul>
 <h2 id="v10-2019-7-15">[v1.0] - 2019-7-15</h2>
-<h3 id="fix_4">Fix</h3>
+<h3 id="fix_5">Fix</h3>
 <ul>
 <li>修复密码中包含特殊字符时pt-osc执行出错的问题</li>
 </ul>
-<h3 id="new-features_5">New Features</h3>
+<h3 id="new-features_6">New Features</h3>
 <ul>
 <li>添加审核结果级别自定义功能 (#52)</li>
 </ul>
-<h3 id="update_5">Update</h3>
+<h3 id="update_6">Update</h3>
 <ul>
 <li>添加delete/update自连接审核支持 (#51)</li>
 <li>优化binlog回滚时指定的server_id自动变化,避免同一实例重复</li>
 </ul>
 <h2 id="v10-rc4-2019-7-9">[v1.0-rc4] - 2019-7-9</h2>
-<h3 id="fix_5">Fix</h3>
+<h3 id="fix_6">Fix</h3>
 <ul>
 <li>修复pt-osc可能出现执行成功时但进度不到100%的问题 (#48)</li>
 </ul>
-<h3 id="new-features_6">New Features</h3>
+<h3 id="new-features_7">New Features</h3>
 <ul>
 <li>增加enable_set_engine、support_engine参数，控制是否允许指定存储引擎以及支持的存储引擎类型 (#47)</li>
 </ul>
-<h3 id="update_6">Update</h3>
+<h3 id="update_7">Update</h3>
 <ul>
 <li>优化osc的进程列表,同一会话的osc进程信息延后清除(在会话执行返回后) (#48)</li>
 <li>优化备份库库名生成逻辑,库名过长时自动截断 (#49)</li>
 <li>优化delete和update别名审核 (#51)</li>
 </ul>
 <h2 id="v10-rc3-2019-7-2">[v1.0-rc3] - 2019-7-2</h2>
-<h3 id="fix_6">Fix</h3>
+<h3 id="fix_7">Fix</h3>
 <ul>
 <li>修复使用osc做DDL变更时可能不支持的问题(如<code>alter table t engine='innodb'</code>)</li>
 </ul>
-<h3 id="new-features_7">New Features</h3>
+<h3 id="new-features_8">New Features</h3>
 <ul>
 <li>添加sleep执行等待功能,降低对线上数据库的影响 (#46)<ul>
 <li>调用选项 <code>sleep</code> ,执行 <code>sleep_rows</code> 条SQL后休眠多少毫秒,以降低对线上数据库的影响</li>
@@ -359,17 +381,17 @@
 <li>添加参数 <code>max_allowed_packet</code> 以支持更长的SQL文本</li>
 <li>添加参数 <code>skip_sqls</code> 以兼容不同客户端的默认sql</li>
 </ul>
-<h3 id="update_7">Update</h3>
+<h3 id="update_8">Update</h3>
 <ul>
 <li>调整备份记录表sql_statement字段类型为mediumtext,并自动兼容旧版本的text类型</li>
 <li>兼容mysqlclient客户端</li>
 </ul>
 <h2 id="v10-rc2-2019-6-21">[v1.0-rc2] - 2019-6-21</h2>
-<h3 id="fix_7">Fix</h3>
+<h3 id="fix_8">Fix</h3>
 <ul>
 <li>优化回滚相关表结构,字符集调整为utf8mb4 (<code>历史表结构需要手动调整</code>)</li>
 </ul>
-<h3 id="update_8">Update</h3>
+<h3 id="update_9">Update</h3>
 <ul>
 <li>优化审核规则,审核子查询、函数等各种表达式 (#44)</li>
 <li>优化gh-ost默认生成的socket文件名格式</li>
@@ -377,123 +399,123 @@
 <li>binlog解析时添加mariadb判断</li>
 </ul>
 <h2 id="v10-rc1-2019-6-12">[v1.0-rc1] - 2019-6-12</h2>
-<h3 id="new-features_8">New Features</h3>
+<h3 id="new-features_9">New Features</h3>
 <ul>
 <li>添加split分隔功能 (#42)</li>
 </ul>
 <h2 id="v09-beta-2019-6-4">[v0.9-beta] - 2019-6-4</h2>
-<h3 id="new-features_9">New Features</h3>
+<h3 id="new-features_10">New Features</h3>
 <ul>
 <li>添加统计功能,可通过参数 <code>enable_sql_statistic</code> 启用 (#38)</li>
 <li>添加参数 <code>check_column_position_change</code> ,可控制是否检查列位置/顺序变更 (#40, #41)</li>
 </ul>
-<h3 id="update_9">Update</h3>
+<h3 id="update_10">Update</h3>
 <ul>
 <li>优化使用阿里云RDS和gh-ost时的逻辑,自动设置 <code>assume-master-host</code> 参数 (#39)</li>
 </ul>
 <h2 id="v083-beta-2019-5-30">[v0.8.3-beta] - 2019-5-30</h2>
-<h3 id="fix_8">Fix</h3>
+<h3 id="fix_9">Fix</h3>
 <ul>
 <li>修复gh-ost的initially-drop-old-table和initially-drop-ghost-table参数支持</li>
 <li>修复设置osc_min_table_size大于0后无法正常启用osc的bug</li>
 </ul>
-<h3 id="update_10">Update</h3>
+<h3 id="update_11">Update</h3>
 <ul>
 <li>兼容语法inception get processlist</li>
 <li>docker镜像内置pt-osc包(版本3.0.13)</li>
 </ul>
 <h2 id="v082-beta-2019-5-27">[v0.8.2-beta] - 2019-5-27</h2>
-<h3 id="fix_9">Fix</h3>
+<h3 id="fix_10">Fix</h3>
 <ul>
 <li>fix: 修复binlog解析时对unsigned列溢出值的处理</li>
 <li>fix: 修复gh-ost执行语句有反引号时报语法错误的bug (#33)</li>
 <li>fix: 修复kill DDL操作时,返回执行和备份成功的bug,现在会提示执行结果未知了 (#34)</li>
 </ul>
 <h2 id="v081-beta-2019-5-24">[v0.8.1-beta] - 2019-5-24</h2>
-<h3 id="fix_10">Fix</h3>
+<h3 id="fix_11">Fix</h3>
 <ul>
 <li>修复新建表后,使用大小写不一致的表名时返回表不存在bug</li>
 </ul>
-<h3 id="new-features_10">New Features</h3>
+<h3 id="new-features_11">New Features</h3>
 <ul>
 <li>添加general_log参数,用以记录全量日志</li>
 </ul>
-<h3 id="update_11">Update</h3>
+<h3 id="update_12">Update</h3>
 <ul>
 <li>优化insert select新表的审核规则,现在select新表时也可以审核了</li>
 </ul>
 <h2 id="v08-beta-2019-5-22">[v0.8-beta] - 2019-5-22</h2>
-<h3 id="fix_11">Fix</h3>
+<h3 id="fix_12">Fix</h3>
 <ul>
 <li>修复当开启sql指纹功能时,可能出现把警告误标记为错误的bug</li>
 </ul>
-<h3 id="update_12">Update</h3>
+<h3 id="update_13">Update</h3>
 <ul>
 <li>优化子查询审核规则,递归审核所有子查询</li>
 <li>审核group by语法和聚合函数</li>
 </ul>
 <h2 id="v075-beta-2019-5-17">[v0.7.5-beta] - 2019-5-17</h2>
-<h3 id="fix_12">Fix</h3>
+<h3 id="fix_13">Fix</h3>
 <ul>
 <li>修复执行阶段kill逻辑,避免kill后备份也中止</li>
 </ul>
-<h3 id="new-features_11">New Features</h3>
+<h3 id="new-features_12">New Features</h3>
 <ul>
 <li>添加select语法支持</li>
 <li>添加alter table的ALGORITHM,LOCK,FORCE语法支持</li>
 </ul>
-<h3 id="update_13">Update</h3>
+<h3 id="update_14">Update</h3>
 <ul>
 <li>优化update子查询审核</li>
 </ul>
 <h2 id="v074-beta-2019-5-12">[v0.7.4-beta] - 2019-5-12</h2>
-<h3 id="new-features_12">New Features</h3>
+<h3 id="new-features_13">New Features</h3>
 <ul>
 <li>添加alter table表选项语法支持 (#30)</li>
 <li>重新设计kill操作支持,支持远端数据库kill和goInception kill命令 (#10)</li>
 </ul>
 <h2 id="v073-beta-2019-5-10">[v0.7.3-beta] - 2019-5-10</h2>
-<h3 id="fix_13">Fix</h3>
+<h3 id="fix_14">Fix</h3>
 <ul>
 <li>修复在开启备份时,执行错误时偶尔出现的误标记执行/备份成功bug</li>
 </ul>
-<h3 id="new-features_13">New Features</h3>
+<h3 id="new-features_14">New Features</h3>
 <ul>
 <li>添加<code>check_column_type_change</code>参数，设置是否开启字段类型变更审核,默认<code>开启</code> (#27)</li>
 </ul>
-<h3 id="update_14">Update</h3>
+<h3 id="update_15">Update</h3>
 <ul>
 <li>实现insert select * 列数审核</li>
 </ul>
 <h2 id="v072-beta-2019-5-7">[v0.7.2-beta] - 2019-5-7</h2>
-<h3 id="new-features_14">New Features</h3>
+<h3 id="new-features_15">New Features</h3>
 <ul>
 <li>添加<code>enable_json_type</code>参数，设置是否允许json类型字段 (#26)</li>
 </ul>
-<h3 id="update_15">Update</h3>
+<h3 id="update_16">Update</h3>
 <ul>
 <li>实现基于系统变量explicit_defaults_for_timestamp的审核规则</li>
 <li>优化osc解析,转义密码和alter语句中的特殊字符</li>
 </ul>
 <h2 id="v071-beta-2019-5-4">[v0.7.1-beta] - 2019-5-4</h2>
-<h3 id="update_16">Update</h3>
+<h3 id="update_17">Update</h3>
 <ul>
 <li>优化json类型字段处理逻辑，不再检查其默认值和NOT NULL约束 (#7, #22)</li>
 <li>优化must_have_columns参数值解析</li>
 <li>优化insert select审核逻辑</li>
 </ul>
-<h3 id="fix_14">Fix</h3>
+<h3 id="fix_15">Fix</h3>
 <ul>
 <li>修复和完善add column(...)语法支持</li>
 <li>修复开启osc时,alter语句有多余空格时执行失败的bug</li>
 </ul>
-<h3 id="new-features_15">New Features</h3>
+<h3 id="new-features_16">New Features</h3>
 <ul>
 <li>添加<code>enable_null_index_name</code>参数，允许不指定索引名 (#25)</li>
 <li>添加语法树打印功能(beta) (#21)</li>
 </ul>
 <h2 id="v07-beta-2019-4-26">[v0.7-beta] - 2019-4-26</h2>
-<h3 id="update_17">Update</h3>
+<h3 id="update_18">Update</h3>
 <ul>
 <li>优化update关联新建表时的审核，现在update时可以关联新建表了</li>
 <li>优化insert 新建 select语法审核，现在可以获取预估受影响行数了</li>
@@ -501,50 +523,50 @@
 <li>优化<code>check_column_default_value</code>的审核逻辑，默认值审核时会跳过主键</li>
 <li>备份阶段sql过长时会自动截断(比如insert values很多行)，<code>返回警告但不影响执行和备份操作</code></li>
 </ul>
-<h3 id="fix_15">Fix</h3>
+<h3 id="fix_16">Fix</h3>
 <ul>
 <li>修复开启<code>enable_pk_columns_only_int</code>选项时列类型审核错误的问题</li>
 </ul>
-<h3 id="new-features_16">New Features</h3>
+<h3 id="new-features_17">New Features</h3>
 <ul>
 <li>添加<code>enable_set_collation</code>参数，设置是否允许指定表和数据库的排序规则</li>
 <li>添加<code>support_collation</code>参数，设置支持的排序规则,多个时以逗号分隔</li>
 </ul>
 <h2 id="v064-beta-2019-4-23">[v0.6.4-beta] - 2019-4-23</h2>
-<h3 id="fix_16">Fix</h3>
+<h3 id="fix_17">Fix</h3>
 <ul>
 <li>修复mysql 5.6和mariadb无法获取受影响行数的问题</li>
 </ul>
 <h2 id="v063-beta-2019-4-22">[v0.6.3-beta] - 2019-4-22</h2>
-<h3 id="new-features_17">New Features</h3>
+<h3 id="new-features_18">New Features</h3>
 <ul>
 <li>添加<code>max_insert_rows</code>参数，设置insert values允许的最大行数。</li>
 <li>添加<code>must_have_columns</code>参数，用以指定建表时必须创建的列。多个列时以逗号分隔(<code>格式: 列名 [列类型,可选]</code>)</li>
 </ul>
 <h2 id="v062-beta-2019-4-18">[v0.6.2-beta] - 2019-4-18</h2>
-<h3 id="update_18">Update</h3>
+<h3 id="update_19">Update</h3>
 <ul>
 <li>添加不支持的语法警告(create table as和create table select)</li>
 <li>实现alter多子句时的表结构变化支持,如drop column后跟add column</li>
 </ul>
-<h3 id="fix_17">Fix</h3>
+<h3 id="fix_18">Fix</h3>
 <ul>
 <li>修复explain返回null列时报错的问题</li>
 <li>修复索引的唯一标识设置错误问题</li>
 </ul>
 <h2 id="v061-beta-2019-4-9">[v0.6.1-beta] - 2019-4-9</h2>
-<h3 id="update_19">Update</h3>
+<h3 id="update_20">Update</h3>
 <ul>
 <li>添加远端数据库断开重连机制，优化线程号和master status查询速度</li>
 <li>优化远端数据库访问操作</li>
 <li>优化sql内容解析，移除多余分号和空格</li>
 </ul>
-<h3 id="fix_18">Fix</h3>
+<h3 id="fix_19">Fix</h3>
 <ul>
 <li>修复跨库update时无法找到列的问题</li>
 <li>修复osc子句有双引号时执行错误的问题</li>
 </ul>
-<h3 id="new-features_18">New Features</h3>
+<h3 id="new-features_19">New Features</h3>
 <ul>
 <li>添加sql指纹功能
 dml语句相似时，可以根据相同的指纹ID复用explain结果，以减少远端数据库explain操作，并提高审核速度<ul>
@@ -555,7 +577,7 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 </li>
 </ul>
 <h2 id="v06-beta-2019-4-3">[v0.6-beta] - 2019-4-3</h2>
-<h3 id="update_20">Update</h3>
+<h3 id="update_21">Update</h3>
 <ul>
 <li>备份操作性能优化,备份信息改为批量写入</li>
 <li>添加备份库连接超时检查</li>
@@ -565,38 +587,38 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 <li>优化时间格式和范围检查,根据数据库sql_mode校验零值日期</li>
 <li>升级到go 1.12</li>
 </ul>
-<h3 id="fix_19">Fix</h3>
+<h3 id="fix_20">Fix</h3>
 <ul>
 <li>修复index name校验逻辑,其可与列名一致</li>
 <li>修复timestamp默认值校验不准确的问题</li>
 </ul>
-<h3 id="new-features_19">New Features</h3>
+<h3 id="new-features_20">New Features</h3>
 <ul>
 <li>添加kill功能支持,在审核和执行时可以kill,备份阶段无法kill (#10)</li>
 <li>添加<code>check_timestamp_count</code>参数,可配置是否检查current_timestamp数量 (#11, #15)</li>
 </ul>
 <h2 id="v053-beta-2019-3-25">[v0.5.3-beta] - 2019-3-25</h2>
-<h3 id="update_21">Update</h3>
+<h3 id="update_22">Update</h3>
 <ul>
 <li>变更列名时使用逻辑校验,避免explain update失败</li>
 <li>添加union子句校验</li>
 <li>添加表名别名重复性校验</li>
 </ul>
-<h3 id="fix_20">Fix</h3>
+<h3 id="fix_21">Fix</h3>
 <ul>
 <li>修复update set子句指定表别名时校验问题</li>
 <li>修复自增列校验问题</li>
 <li>修复default value为表达式时的校验问题</li>
 </ul>
 <h2 id="v052-beta-2019-3-17">[v0.5.2-beta] - 2019-3-17</h2>
-<h3 id="update_22">Update</h3>
+<h3 id="update_23">Update</h3>
 <ul>
 <li>优化主键NULL列审核规则(审核<code>DEFAULT NULL</code>)</li>
 <li>优化索引总长度校验,根据列字符集判断字节数长度</li>
 <li>优化DDL备份对默认值的处理</li>
 </ul>
 <h2 id="v051-beta-2019-3-14">[v0.5.1-beta] - 2019-3-14</h2>
-<h3 id="update_23">Update</h3>
+<h3 id="update_24">Update</h3>
 <ul>
 <li>优化option解析规则,密码兼容特殊字符</li>
 <li>优化语法解析失败时返回的sql语句</li>
@@ -606,12 +628,12 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 </ul>
 </li>
 </ul>
-<h3 id="fix_21">Fix</h3>
+<h3 id="fix_22">Fix</h3>
 <ul>
 <li>修复mariadb备份警告信息重复的问题</li>
 </ul>
 <h2 id="v05-beta-2019-3-10">[v0.5-beta] - 2019-3-10</h2>
-<h3 id="update_24">Update</h3>
+<h3 id="update_25">Update</h3>
 <ul>
 <li>兼容mariadb v10版本的备份兼容(高并发时回滚语句可能有误，须注意检查)</li>
 <li>更新pt-osc部分参数名，使其与inception保持一致<ul>
@@ -631,12 +653,12 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 </ul>
 </li>
 </ul>
-<h3 id="fix_22">Fix</h3>
+<h3 id="fix_23">Fix</h3>
 <ul>
 <li>修复json列校验异常问题 (#7)</li>
 </ul>
 <h2 id="v041-beta-2019-3-6">[v0.4.1-beta] - 2019-3-6</h2>
-<h3 id="update_25">Update</h3>
+<h3 id="update_26">Update</h3>
 <ul>
 <li>兼容mariadb数据库(v5.5.60)<ul>
 <li>添加mariadb的binlog解析支持(测试版本<strong>v5.5.60</strong>,v10版本由于binlog格式改变,暂无法解析thread_id)</li>
@@ -645,7 +667,7 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 </li>
 </ul>
 <h2 id="v04-beta-2019-3-5">[v0.4-beta] - 2019-3-5</h2>
-<h3 id="new-features_20">New Features</h3>
+<h3 id="new-features_21">New Features</h3>
 <ul>
 <li>添加gh-ost工具支持<ul>
 <li>无需安装gh-ost,功能内置(v1.0.48)</li>
@@ -659,7 +681,7 @@ dml语句相似时，可以根据相同的指纹ID复用explain结果，以减�
 </li>
 </ul>
 <h2 id="v03-beta-2019-2-13">[v0.3-beta] - 2019-2-13</h2>
-<h3 id="new-features_21">New Features</h3>
+<h3 id="new-features_22">New Features</h3>
 <ul>
 <li>添加pt-osc工具支持<ul>
 <li><code>inception get osc processlist</code> 查看osc进程列表</li>
