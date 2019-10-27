@@ -370,6 +370,12 @@
 <td>sql指纹功能。dml语句相似时，可以根据相同的指纹ID复用explain结果，以减少远端数据库explain操作，并提高审核速度</td>
 </tr>
 <tr>
+<td>explain_rule <code>v1.1.1</code></td>
+<td>"first"</td>
+<td>"first", "max"</td>
+<td>explain判断受影响行数时使用的规则(<code>"first", "max"</code>)。  <code>"first"</code>: 使用第一行的explain结果作为受影响行数, <code>"max"</code>:      使用explain结果中的最大值作为受影响行数</td>
+</tr>
+<tr>
 <td>enable_foreign_key</td>
 <td>false</td>
 <td>true,false</td>
@@ -386,6 +392,12 @@
 <td>false</td>
 <td>true,false</td>
 <td>设置是否允许json类型字段，包括建表、修改列、新增列操作</td>
+</tr>
+<tr>
+<td>enable_minimal_rollback <code>v1.1.2</code></td>
+<td>false</td>
+<td>true,false</td>
+<td>设置是否启用最小化回滚SQL，当开启时，update的回滚语句仅记录最小化变更(未变更列不再记录), 默认为<code>false</code></td>
 </tr>
 <tr>
 <td>enable_not_innodb  <code>v1.0-rc4 已删除</code></td>
