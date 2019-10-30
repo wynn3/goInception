@@ -394,12 +394,6 @@
 <td>设置是否允许json类型字段，包括建表、修改列、新增列操作</td>
 </tr>
 <tr>
-<td>enable_minimal_rollback <code>v1.1.2</code></td>
-<td>false</td>
-<td>true,false</td>
-<td>设置是否启用最小化回滚SQL，当开启时，update的回滚语句仅记录最小化变更(未变更列不再记录), 默认为<code>false</code></td>
-</tr>
-<tr>
 <td>enable_not_innodb  <code>v1.0-rc4 已删除</code></td>
 <td>false</td>
 <td>true,false</td>
@@ -578,12 +572,6 @@
 <td>'innodb'</td>
 <td>string</td>
 <td>支持的存储引擎类型.默认为<code>innodb</code>,此处可以设置多个,以逗号分隔,或者修改默认的存在引擎类型</td>
-</tr>
-<tr>
-<td>wait_timeout <code>v1.1.2</code></td>
-<td>0</td>
-<td>int</td>
-<td>远端数据库等待超时时间, 单位:秒, 默认值为 <code>0</code> 时表示使用数据库默认值</td>
 </tr>
 </tbody>
 </table>

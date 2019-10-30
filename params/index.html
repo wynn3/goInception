@@ -69,6 +69,15 @@
     <li class="toctree-l2"><a href="#_2">选项列表</a></li>
     
 
+    <li class="toctree-l2"><a href="#mysql">mysql加密连接设置</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#ssl">ssl类型说明</a></li>
+        
+        </ul>
+    
+
     </ul>
 	    </li>
           
@@ -218,7 +227,7 @@ inception_magic_commit;
 </tr>
 <tr>
 <td>db <code>v1.1.0</code></td>
-<td>'mysql'</td>
+<td>"mysql"</td>
 <td>string</td>
 <td>默认连接的数据库。该参数可忽略，即使用默认数据库<code>mysql</code>。可设置为空""。</td>
 </tr>
@@ -284,6 +293,98 @@ inception_magic_commit;
 </tr>
 </tbody>
 </table>
+<h3 id="mysql">mysql加密连接设置</h3>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ssl</td>
+<td>DISABLED</td>
+<td>string</td>
+<td>ssl-mode设置，参数和mysql的--ssl-mode一致</td>
+</tr>
+<tr>
+<td>ssl-ca</td>
+<td></td>
+<td>string</td>
+<td>证书颁发机构（CA）证书文件的路径名（PEM格式）</td>
+</tr>
+<tr>
+<td>ssl-cert</td>
+<td></td>
+<td>string</td>
+<td>SSL公钥证书文件的路径名（PEM格式）</td>
+</tr>
+<tr>
+<td>ssl-key</td>
+<td></td>
+<td>string</td>
+<td>SSL私钥文件的路径名（PEM格式）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ssl">ssl类型说明</h4>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DISABLED <code>默认值</code></td>
+<td>禁用TLS</td>
+</tr>
+<tr>
+<td>PREFERRED</td>
+<td>由服务器发布时使用TLS</td>
+</tr>
+<tr>
+<td>REQUIRED</td>
+<td>使用TLS，但不检查CA证书</td>
+</tr>
+<tr>
+<td>VERIFY_CA</td>
+<td>验证CA证书，但忽略主机名不匹配</td>
+</tr>
+<tr>
+<td>VERIFY_IDENTITY</td>
+<td>验证CA证书</td>
+</tr>
+</tbody>
+</table>
+<h5 id="ca">CA证书认证示例</h5>
+<pre><code class="python"># 通过ssl=verify_ca设置CA证书验证
+# 需要把证书放在goInception服务同主机上
+sql = '''/*--user=test;--password=xxx;--host=127.0.0.1;--port=3333;--check=1;\
+--ignore-warnings=1;--ssl=verify_ca;\
+--ssl-ca=/data/mysql/data/ca.pem;\
+--ssl-cert=/data/mysql/data/client-cert.pem;\
+--ssl-key=/data/mysql/data/client-key.pem;*/
+inception_magic_start;
+use test_inc;
+...
+inception_magic_commit;'''
+</code></pre>
+
+<h5 id="ssl_1">ssl认证认证示例</h5>
+<pre><code class="python"># 通过ssl=verify_ca设置CA证书验证
+# 需要把证书放在goInception服务同主机上
+sql = '''/*--user=test;--password=xxx;--host=127.0.0.1;--port=3333;--check=1;\
+--ignore-warnings=1;--ssl=required;*/
+inception_magic_start;
+use test_inc;
+...
+inception_magic_commit;'''
+</code></pre>
               
             </div>
           </div>
