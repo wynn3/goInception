@@ -413,9 +413,9 @@
 </tr>
 <tr>
 <td>enable_nullable</td>
-<td>false</td>
+<td>true</td>
 <td>true,false</td>
-<td>创建或者新增列时如果列为NULL，是不是报错</td>
+<td>创建或者新增列时是否允许列为NULL</td>
 </tr>
 <tr>
 <td>enable_null_index_name <code>v0.7.1</code></td>
@@ -488,6 +488,12 @@
 <td>false</td>
 <td>true,false</td>
 <td>是否记录全量日志</td>
+</tr>
+<tr>
+<td>hex_blob <code>v1.1.4</code></td>
+<td>false</td>
+<td>true,false</td>
+<td>在解析binlog时,二进制类型如果无法以字符串形式保存,则以十六进制字符串转储(影响类型:binary,varbinary,blob),默认关闭</td>
 </tr>
 <tr>
 <td>lang <code>v0.5.1</code></td>
