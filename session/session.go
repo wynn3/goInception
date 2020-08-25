@@ -1583,7 +1583,17 @@ func logQuery(query string, vars *variable.SessionVars) {
 		query = executor.QueryReplacer.Replace(query)
 		// log.Infof("[GENERAL_LOG] con:%d user:%s schema_ver:%d start_ts:%d sql:%s%s",
 		// 	vars.ConnectionID, vars.User, vars.TxnCtx.SchemaVersion, vars.TxnCtx.StartTS, query, vars.GetExecuteArgumentsInfo())
-		log.Infof("[GENERAL_LOG] con:%d user:%s sql:%s%s",
+		beginPos := strings.Index(query, "--password=")
+		endPos := strings.Index(query, "--host=")
+		if beginPos > -1 && endPos > -1 {
+			passwd := query[beginPos + 11:endPos - 1]
+			replaceQuery := strings.Replace(query, passwd, "******", 1)
+			log.Infof("[GENERAL_LOG] con:%d user:%s sql:%s%s",
+			vars.ConnectionID, vars.User, replaceQuery, vars.GetExecuteArgumentsInfo())
+		} else {
+			log.Infof("[GENERAL_LOG] con:%d user:%s sql:%s%s",
 			vars.ConnectionID, vars.User, query, vars.GetExecuteArgumentsInfo())
+		}
+
 	}
 }

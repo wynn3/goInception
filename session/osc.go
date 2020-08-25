@@ -198,7 +198,7 @@ func (s *session) mysqlExecuteAlterTableOsc(r *Record) {
 	buf.WriteString(s.opt.User)
 	buf.WriteString(",p='")
 	buf.WriteString(strings.Replace(s.opt.Password, "'", "'\"'\"'", -1))
-	buf.WriteString("'D=")
+	buf.WriteString("',D=")
 	buf.WriteString(r.TableInfo.Schema)
 	buf.WriteString(",t='")
 	buf.WriteString(r.TableInfo.Name)
