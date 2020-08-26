@@ -719,6 +719,14 @@ func (s *session) execCommand(r *Record, commandName string, params []string) bo
 	err = cmd.Wait()
 	if err != nil {
 		s.appendErrorMessage(err.Error())
+		conninfo := params[len(params)-1]
+		beginPos := strings.Index(conninfo, ",p=")
+		endPos := strings.Index(conninfo, ",D=")
+		if beginPos > -1 && endPos > -1 {
+			passwd := conninfo[beginPos + 3:endPos]
+			replaceStr := strings.Replace(conninfo, passwd, "******", 1)
+			params[len(params)-1] = replaceStr
+		}
 		log.Errorf("%s %s", commandName, params)
 		log.Error(err)
 	}
