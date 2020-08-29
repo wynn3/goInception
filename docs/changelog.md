@@ -1,5 +1,10 @@
 # goInception 更新日志
 
+## [v1.1.5] - 2020-08-29
+
+### Update
+* 支持percona-toolkit-3.2.1
+* 日志隐藏mysql连接密码
 
 ## [v1.1.5] - 2019-12-09
 
