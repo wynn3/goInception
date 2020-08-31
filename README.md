@@ -34,6 +34,8 @@ git clone https://github.com/hanchuanchuan/goInception.git
 cd goInception
 make parser
 go build -o goInception tidb-server/main.go
+linux平台
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o goInception tidb-server/main.go
 
 ./goInception -config=config/config.toml
 ```
